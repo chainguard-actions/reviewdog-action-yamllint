@@ -1,0 +1,30 @@
+name: reviewdog
+on: [pull_request]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  yamllint:
+    name: runner / yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: yamllint-github-pr-check
+        uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          yamllint_flags: "testdata/"
+      - name: yamllint-github-check
+        uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          level: warning
+          yamllint_flags: "testdata/"
+      - name: yamllint-github-pr-review
+        uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          yamllint_flags: "testdata/"

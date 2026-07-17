@@ -1,0 +1,7 @@
+---
+name: example
+value: 42
+items:
+  - one
+  - two
+  - three

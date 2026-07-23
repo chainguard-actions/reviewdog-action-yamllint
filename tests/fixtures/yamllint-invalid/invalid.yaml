@@ -1,0 +1,3 @@
+---
+name: this_is_a_very_long_line_that_exceeds_the_default_eighty_character_limit_set_by_yamllint_default_config
+value: 42

@@ -14,6 +14,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v1.22 | [`v1.22`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) |
 | v1.22.0 | [`v1.22.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22.0) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) |
 | v1.23.0 | [`v1.23.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.0) | [`e02a49f`](https://github.com/reviewdog/action-yamllint/commit/e02a49fdf53f51ddd8dfa89b09aa975043aeba38) |
+| v1.23.1 | [`v1.23.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.1) | [`de68272`](https://github.com/reviewdog/action-yamllint/commit/de68272fdca5f2a961fb309e0d2e13c2eb186d9e) |
 
 ## Privacy
 

@@ -1,0 +1,6 @@
+---
+project: my-project
+enabled: true
+tags:
+  - alpha
+  - beta

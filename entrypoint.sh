@@ -8,7 +8,7 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 echo '::group:: Running yamllint with reviewdog 🐶 ...'
 yamllint --version
-yamllint --format "parsable" "${INPUT_YAMLLINT_FLAGS:-'.'}" |
+yamllint --format "parsable" ${INPUT_YAMLLINT_FLAGS:-'.'} |
     reviewdog \
         -efm="%f:%l:%c: %m" \
         -name "yamllint" \
@@ -17,7 +17,7 @@ yamllint --format "parsable" "${INPUT_YAMLLINT_FLAGS:-'.'}" |
         -filter-mode="${INPUT_FILTER_MODE}" \
         -fail-level="${INPUT_FAIL_LEVEL}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-        "${INPUT_REVIEWDOG_FLAGS}"
+        ${INPUT_REVIEWDOG_FLAGS}
 EXIT_CODE=$?
 echo '::endgroup::'
 

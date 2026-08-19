@@ -1,0 +1,28 @@
+name: Test fail_level none with invalid YAML
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Create an invalid YAML fixture (line too long)
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/pristine/reviewdog--action-yamllint/v1.20.1/tests/fixtures/invalid"
+          printf -- '---\nthis_key_is_fine: value\nthis_is_a_very_very_very_very_very_very_very_very_very_very_very_very_very_very_very_long_line: yes\n' \
+            > "$GITHUB_WORKSPACE/pristine/reviewdog--action-yamllint/v1.20.1/tests/fixtures/invalid/bad.yaml"
+      - id: action
+        uses: .
+        with:
+          github_token: "dummy-token"
+          reporter: "local"
+          filter_mode: "nofilter"
+          fail_level: "none"
+          yamllint_flags: "pristine/reviewdog--action-yamllint/v1.20.1/tests/fixtures/invalid/bad.yaml"
+      - name: Assert action exited 0 despite lint issues (fail_level=none)
+        run: |
+          echo "Action completed with exit code 0 as expected when fail_level=none"
+          echo "PASS"

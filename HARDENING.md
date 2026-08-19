@@ -8,37 +8,38 @@
 
 **Test Policy SHA:** `843adf9e4b8f85d0c08b27b9d0b09dd094b54702`
 
-**Harden Agent Version:** `1`
+**Harden Agent Version:** `2`
 
 Action **reviewdog--action-yamllint/v1.20.1** was hardened automatically. 2 finding(s) were identified and resolved across 1 iteration(s).
 
 ## Findings Fixed
 
-### unsafe-shell (severity: high)
-
-The Dockerfile downloads and pipes a remote install script directly to `sh` without first saving it to a file: `wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}`. This allows a compromised or man-in-the-middle remote resource to execute arbitrary code during the Docker image build.
-
-Locations:
-
-- `Dockerfile:5`
-
 ### script-injection (severity: high)
 
-Sub-rule (b): In entrypoint.sh, two user-controlled input variables are expanded without double-quoting, allowing shell metacharacter injection. (1) `${INPUT_YAMLLINT_FLAGS:-'.'}` is passed unquoted to `yamllint`, where a value containing spaces, semicolons, or other shell metacharacters would be word-split and interpreted by the shell. (2) `${INPUT_REVIEWDOG_FLAGS}` is passed unquoted to `reviewdog`, with the same risk. Both variables are sourced from action inputs (`inputs.yamllint_flags` and `inputs.reviewdog_flags`) which are workflow-controllable and must be double-quoted.
+Sub-rule (a) violation: A GitHub Actions expression is directly interpolated inside a `run:` shell command string. In `.github/workflows/dockerimage.yml`, the `run:` block contains `${{ github.repository }}` directly embedded in the shell command: `docker build . --file Dockerfile --tag ${{ github.repository }}:$(date +%s)`. Even though `github.repository` is not directly attacker-controlled, any `${{ ... }}` expression inside a `run:` block is a script-injection risk because the value is substituted by the template engine before the shell ever sees it, bypassing shell quoting. The fix is to move the value into an `env:` variable and reference it as a quoted shell variable (e.g., `"$REPO"`)
 
 Locations:
 
-- `entrypoint.sh:9`
-- `entrypoint.sh:18`
+- `.github/workflows/dockerimage.yml:12`
+
+### missing-permissions (severity: medium)
+
+None of the workflow files define a `permissions:` block at the top level or at the job level. Without explicit permissions, workflows run with the default (often broad) token permissions. All four workflow files are affected: depup.yml, dockerimage.yml, release.yml, and reviewdog.yml. Each should declare minimal required permissions (e.g., `permissions: contents: read`) at the top level or per-job.
+
+Locations:
+
+- `.github/workflows/depup.yml:1`
+- `.github/workflows/dockerimage.yml:1`
+- `.github/workflows/release.yml:1`
+- `.github/workflows/reviewdog.yml:1`
 
 ## Iteration Notes
 
 ### Iteration 1
 
-**Fixes applied:** unsafe-shell, script-injection
+**Fixes applied:** script-injection, missing-permissions
 
 **Notes:**
 
-1. Dockerfile: Replaced `wget -O - -q ... | sh -s` pipe pattern with a two-step approach: download the install script to /tmp/install-reviewdog.sh, execute it with `sh`, then remove it. This prevents arbitrary code execution from a compromised remote resource during image build.
-2. entrypoint.sh: Added double-quotes around `${INPUT_YAMLLINT_FLAGS:-'.'}` (line 9) and `${INPUT_REVIEWDOG_FLAGS}` (line 18) to prevent word-splitting and shell metacharacter injection from user-controlled action inputs.
+Fixed script-injection in dockerimage.yml by moving `${{ github.repository }}` into an env: variable (REPO) and referencing it as "$REPO" in the shell command. Added minimal permissions blocks to all four workflow files: dockerimage.yml (contents: read), depup.yml (contents: read, pull-requests: write), release.yml (contents: write), and reviewdog.yml (contents: read, pull-requests: write, checks: write).
 

@@ -1,0 +1,4 @@
+---
+foo: yes
+bar: no
+baz: i_am_a_very_much_too_long_line_i_can_swear_you_will_see_one_day_this_is_way_too_long_for_yamllint

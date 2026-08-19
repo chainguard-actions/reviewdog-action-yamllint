@@ -1,0 +1,26 @@
+name: Test yamllint with lint issues - fail_level none
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        with:
+          github_token: ${{ github.token }}
+          reporter: local
+          level: warning
+          filter_mode: nofilter
+          fail_level: none
+          yamllint_flags: pristine/reviewdog--action-yamllint/v1.20.0/tests/fixtures/bad.yaml
+
+      - name: Assert action completed (fail_level=none means exit 0 even with issues)
+        run: |
+          echo "Action completed with fail_level=none despite lint issues"
+          echo "PASS"

@@ -1,0 +1,15 @@
+---
+name: example
+version: "1.0.0"
+description: A valid YAML fixture file for testing
+
+settings:
+  enabled: true
+  timeout: 30
+  retries: 3
+
+items:
+  - name: item1
+    value: foo
+  - name: item2
+    value: bar

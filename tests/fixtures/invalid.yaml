@@ -1,0 +1,8 @@
+---
+name: example
+version: "1.0.0"
+description: An invalid YAML fixture file for testing
+trailing_spaces:   
+bad_indent:
+  key1: value1
+   key2: value2

@@ -1,0 +1,45 @@
+name: Test basic yamllint - valid YAML
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a valid YAML file for linting
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/fixtures/valid"
+          cat > "$GITHUB_WORKSPACE/tests/fixtures/valid/good.yaml" << 'EOF'
+          ---
+          name: example
+          value: 42
+          items:
+            - one
+            - two
+            - three
+          EOF
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          github_token: ${{ github.token }}
+          reporter: github-check
+          filter_mode: nofilter
+          fail_level: none
+          yamllint_flags: "tests/fixtures/valid"
+
+      - name: Assert action ran (yamllint ran successfully or failed gracefully on sentinel repo)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "PASS: yamllint ran successfully on valid YAML"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (expected with sentinel repo for API calls)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

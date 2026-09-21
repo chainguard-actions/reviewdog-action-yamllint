@@ -1,0 +1,41 @@
+name: Test yamllint - fail_level none ignores errors
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a YAML file with lint errors
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/fixtures/invalid"
+          # This file has yamllint errors: line too long
+          printf 'test: 1\ni_am_a_very_much_too_long_line_i_can_swear_you_will_see_one_day: i_am_not_ok_with_this_kind_of_shitty_things\nhowToSay:      |\n      misaligned:    4\n' \
+            > "$GITHUB_WORKSPACE/tests/fixtures/invalid/bad.yaml"
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          github_token: ${{ github.token }}
+          reporter: local
+          filter_mode: nofilter
+          fail_level: none
+          yamllint_flags: "tests/fixtures/invalid"
+
+      - name: Assert action succeeded despite lint errors (fail_level=none)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          # With fail_level=none, reviewdog always exits 0 regardless of findings
+          if [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action succeeded with fail_level=none even with lint errors"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "FAIL: action should not fail when fail_level=none"
+            exit 1
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

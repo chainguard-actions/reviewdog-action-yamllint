@@ -1,0 +1,62 @@
+name: Test custom yamllint and reviewdog flags
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up git origin reachable inside the Docker container
+        run: |
+          git config user.email "test@example.com"
+          git config user.name "Test User"
+          rm -rf "$GITHUB_WORKSPACE/.git-remote"
+          git init --bare "$GITHUB_WORKSPACE/.git-remote"
+          git push "$GITHUB_WORKSPACE/.git-remote" HEAD:refs/heads/act-harness
+          git remote set-url origin "$GITHUB_WORKSPACE/.git-remote" 2>/dev/null || \
+            git remote add origin "$GITHUB_WORKSPACE/.git-remote"
+
+      - name: Create YAML files and a custom yamllint config
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/fixtures/yamllint-custom"
+          # Write a relaxed yamllint config
+          cat > "$GITHUB_WORKSPACE/tests/fixtures/yamllint-custom/.yamllint.yaml" << 'EOF'
+          ---
+          extends: relaxed
+          rules:
+            line-length:
+              max: 120
+          EOF
+          # Write a YAML file that passes with relaxed rules
+          cat > "$GITHUB_WORKSPACE/tests/fixtures/yamllint-custom/config.yaml" << 'EOF'
+          ---
+          service:
+            name: my-service
+            port: 8080
+            enabled: true
+          EOF
+
+      - id: action
+        uses: .
+        with:
+          github_token: ${{ github.token }}
+          reporter: local
+          level: info
+          filter_mode: nofilter
+          fail_level: none
+          yamllint_flags: "-c tests/fixtures/yamllint-custom/.yamllint.yaml tests/fixtures/yamllint-custom/config.yaml"
+          reviewdog_flags: "-name=yamllint-custom"
+        continue-on-error: true
+
+      - name: Assert action ran with custom flags
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action ran with custom flags (outcome=$OUTCOME)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

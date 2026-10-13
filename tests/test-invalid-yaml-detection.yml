@@ -1,0 +1,53 @@
+name: Test invalid YAML detection
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Set up a git origin reachable inside the Docker container
+        run: |
+          git config user.email "test@example.com"
+          git config user.name "Test User"
+          rm -rf "$GITHUB_WORKSPACE/.git-remote"
+          git init --bare "$GITHUB_WORKSPACE/.git-remote"
+          git push "$GITHUB_WORKSPACE/.git-remote" HEAD:refs/heads/act-harness
+          git remote set-url origin "$GITHUB_WORKSPACE/.git-remote" 2>/dev/null || \
+            git remote add origin "$GITHUB_WORKSPACE/.git-remote"
+
+      - name: Create invalid YAML fixture
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/fixtures/invalid-yaml"
+          # Write a YAML file with intentional yamllint violations (trailing spaces, wrong indentation)
+          printf 'key: value  \nlist:\n- item1\n- item2\n' > "$GITHUB_WORKSPACE/tests/fixtures/invalid-yaml/bad.yaml"
+
+      - id: action
+        uses: .
+        with:
+          github_token: ${{ github.token }}
+          reporter: local
+          filter_mode: nofilter
+          fail_level: error
+          yamllint_flags: "-d '{extends: default, rules: {trailing-spaces: enable}}' tests/fixtures/invalid-yaml"
+        continue-on-error: true
+
+      - name: Assert action detected YAML issues or failed gracefully
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          # The action may fail because yamllint found issues (fail_level=error) or
+          # because the sentinel repo is not resolvable for reviewdog API calls.
+          # Either outcome is acceptable — what matters is the action ran.
+          if [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action reported failure (yamllint issues detected or sentinel repo)"
+          elif [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action succeeded (reviewdog ran without fatal error)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

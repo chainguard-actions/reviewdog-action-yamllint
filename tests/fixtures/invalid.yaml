@@ -1,0 +1,7 @@
+---
+name: example
+name: duplicate
+items:
+    - first
+    - second
+nested: {  key: value  }

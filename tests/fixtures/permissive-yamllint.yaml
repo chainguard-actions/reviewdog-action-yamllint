@@ -1,0 +1,6 @@
+---
+extends: default
+rules:
+  key-duplicates: disable
+  indentation: disable
+  braces: disable

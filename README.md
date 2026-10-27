@@ -6,22 +6,23 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1 | [`v1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) |
-| v1.20 | [`v1.20`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) |
-| v1.20.0 | [`v1.20.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20.0) | [`1dca3ad`](https://github.com/reviewdog/action-yamllint/commit/1dca3ad811867be18fbe293a9818d715a6c2cd46) |
-| v1.20.1 | [`v1.20.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20.1) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) |
-| v1.21.0 | [`v1.21.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.21.0) | [`f01d8a4`](https://github.com/reviewdog/action-yamllint/commit/f01d8a48fd8d89f89895499fca2cff09f9e9e8c0) |
-| v1.22 | [`v1.22`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) |
-| v1.22.0 | [`v1.22.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22.0) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) |
-| v1.23.0 | [`v1.23.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.0) | [`e02a49f`](https://github.com/reviewdog/action-yamllint/commit/e02a49fdf53f51ddd8dfa89b09aa975043aeba38) |
-| v1.23.1 | [`v1.23.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.1) | [`de68272`](https://github.com/reviewdog/action-yamllint/commit/de68272fdca5f2a961fb309e0d2e13c2eb186d9e) |
-| v1.24.0 | [`v1.24.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.24.0) | [`6803b0d`](https://github.com/reviewdog/action-yamllint/commit/6803b0dc8f295034a6156b924814053acb2e6f5a) |
-| v1.25.0 | [`v1.25.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.0) | [`290d92c`](https://github.com/reviewdog/action-yamllint/commit/290d92c84b22627946efc7fd6f038ade2d2beede) |
-| v1.25.1 | [`v1.25.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.1) | [`5dd4640`](https://github.com/reviewdog/action-yamllint/commit/5dd4640db975e4cac6f4e775a401695bafc28068) |
-| v1.25.2 | [`v1.25.2`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.2) | [`3224b47`](https://github.com/reviewdog/action-yamllint/commit/3224b47de22a2fd9c8c0fbc120e6d0049d1f5060) |
-| v1.25.3 | [`v1.25.3`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.3) | [`8f84f0f`](https://github.com/reviewdog/action-yamllint/commit/8f84f0fb670d777d3e584ef50faf60eb61605b2a) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1 | [`v1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) | — |
+| v1.20 | [`v1.20`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) | — |
+| v1.20.0 | [`v1.20.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20.0) | [`1dca3ad`](https://github.com/reviewdog/action-yamllint/commit/1dca3ad811867be18fbe293a9818d715a6c2cd46) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.20.0/HARDENING.md) |
+| v1.20.1 | [`v1.20.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.20.1) | [`b4cb69c`](https://github.com/reviewdog/action-yamllint/commit/b4cb69cd1aaf21ad5ea000477224c9da4a01acdd) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.20.1/HARDENING.md) |
+| v1.21.0 | [`v1.21.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.21.0) | [`f01d8a4`](https://github.com/reviewdog/action-yamllint/commit/f01d8a48fd8d89f89895499fca2cff09f9e9e8c0) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.21.0/HARDENING.md) |
+| v1.22 | [`v1.22`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) | — |
+| v1.22.0 | [`v1.22.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.22.0) | [`b5f7217`](https://github.com/reviewdog/action-yamllint/commit/b5f7217d8c815ae374d1d55840d5e569d82f01f0) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.22.0/HARDENING.md) |
+| v1.23.0 | [`v1.23.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.0) | [`e02a49f`](https://github.com/reviewdog/action-yamllint/commit/e02a49fdf53f51ddd8dfa89b09aa975043aeba38) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.23.0/HARDENING.md) |
+| v1.23.1 | [`v1.23.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.23.1) | [`de68272`](https://github.com/reviewdog/action-yamllint/commit/de68272fdca5f2a961fb309e0d2e13c2eb186d9e) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.23.1/HARDENING.md) |
+| v1.24.0 | [`v1.24.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.24.0) | [`6803b0d`](https://github.com/reviewdog/action-yamllint/commit/6803b0dc8f295034a6156b924814053acb2e6f5a) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.24.0/HARDENING.md) |
+| v1.25.0 | [`v1.25.0`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.0) | [`290d92c`](https://github.com/reviewdog/action-yamllint/commit/290d92c84b22627946efc7fd6f038ade2d2beede) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.25.0/HARDENING.md) |
+| v1.25.1 | [`v1.25.1`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.1) | [`5dd4640`](https://github.com/reviewdog/action-yamllint/commit/5dd4640db975e4cac6f4e775a401695bafc28068) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.25.1/HARDENING.md) |
+| v1.25.2 | [`v1.25.2`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.2) | [`3224b47`](https://github.com/reviewdog/action-yamllint/commit/3224b47de22a2fd9c8c0fbc120e6d0049d1f5060) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.25.2/HARDENING.md) |
+| v1.25.3 | [`v1.25.3`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.3) | [`8f84f0f`](https://github.com/reviewdog/action-yamllint/commit/8f84f0fb670d777d3e584ef50faf60eb61605b2a) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.25.3/HARDENING.md) |
+| v1.25.4 | [`v1.25.4`](https://github.com/chainguard-actions/reviewdog-action-yamllint/tree/v1.25.4) | [`072d1a6`](https://github.com/reviewdog/action-yamllint/commit/072d1a6ca6f5a03de10f492f6119fcbc8d47302b) | [`HARDENING.md`](https://github.com/chainguard-actions/reviewdog-action-yamllint/blob/v1.25.4/HARDENING.md) |
 
 ## Privacy
 

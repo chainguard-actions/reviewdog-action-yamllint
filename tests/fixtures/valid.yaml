@@ -1,0 +1,7 @@
+---
+name: example
+items:
+  - alpha
+  - beta
+nested:
+  key: value
